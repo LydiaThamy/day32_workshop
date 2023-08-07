@@ -1,0 +1,66 @@
+<h1>ToDo</h1>
+
+
+<form [formGroup]="toDoForm" (ngSubmit)="addTodo()">
+
+  <table>
+
+    <tr>
+      <td>
+        <label for="description">Description</label>:&nbsp;
+      </td>
+      <td>
+        <input type="text" formControlName="description">
+      </td>
+    </tr>
+
+    <tr *ngIf="toDoForm.get('description').touched && toDoForm.get('description').hasError('required')">
+      <td></td>
+      <td style="color: red;">Enter the task description</td>
+    </tr>
+
+    <tr *ngIf="!toDoForm.get('description').hasError('required') && toDoForm.get('description').hasError('minlength')">
+      <td></td>
+      <td style="color: red;">Must be at least 5 characters</td>
+    </tr>
+
+    <tr>
+      <td>
+        <label for="priority">Priority</label>:
+      </td>
+      <td>
+        <label for="low">Low&nbsp;</label>
+        <input type="radio" value="low" formControlName="priority">
+
+        <label for="medium">&emsp;Medium&nbsp;</label>
+        <input type="radio" value="medium" formControlName="priority">
+
+        <label for="high">&emsp;High&nbsp;</label>
+        <input type="radio" value="high" formControlName="priority">
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label for="due">Due</label>:
+      </td>
+      <td>
+        <input type="date" formControlName="due">
+      </td>
+    </tr>
+
+    <tr *ngIf="toDoForm.get('due').touched && toDoForm.get('due').hasError('presentOrFuture')" style="color: red;">
+      <td></td>
+      <td>Date must be in the present or future</td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td style="text-align: end;">
+        <button type="submit" [disabled]="toDoForm.invalid">Add</button>
+      </td>
+    </tr>
+
+  </table>
+
+</form>
