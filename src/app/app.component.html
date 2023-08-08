@@ -1,4 +1,5 @@
 <div class="container">
-  <app-create (newTask)="addNewTask($event)"></app-create>
-  <app-list [updatedTasks]="taskList"></app-list>
+  <app-todo (newTask)="addNewTask($event)"></app-todo>
+  <app-task [updatedTasks]="taskList" (completedTask)="completeTask($event)"></app-task>
+  <app-complete [completedTasks]="completedList" (restoredTask)="restoreTask($event)"></app-complete>
 </div>

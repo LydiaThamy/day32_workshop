@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Todo } from './Todo';
 
 @Component({
@@ -6,17 +6,35 @@ import { Todo } from './Todo';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'todo_list';
 
-  taskList: Todo[]
+  taskList: Todo[] = []
+  completedList: Todo[] = []
 
-  addNewTask(todo: Todo) {
+  ngOnInit(): void {
+    this.fillList()
+  }
 
-    if (this.taskList == null) {
-      this.taskList = [todo]
-    } else {
-      this.taskList = [...this.taskList, todo]
-    }
+  fillList() {
+    this.taskList = [
+      { description: 'Fold clothes', priority: 'medium', due: new Date(2023, 9, 11) },
+      { description: 'Change bedsheets', priority: 'high', due: new Date(2023, 8, 13) },
+      { description: 'Book holiday', priority: 'low', due: new Date(2023, 10, 30) }
+    ]
+  }
+
+  // task component
+  addNewTask(task: Todo) {
+    this.taskList = [...this.taskList, task]
+  }
+
+  // complete component
+  completeTask(task: Todo) {
+      this.completedList = [...this.completedList, task]
+  }
+
+  restoreTask(task: Todo) {
+    this.taskList = [...this.taskList, task]
   }
 }

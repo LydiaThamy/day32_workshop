@@ -3,14 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { CreateComponent } from './components/create/create.component';
-import { ListComponent } from './components/list/list.component';
+import { TodoComponent } from './components/todo/todo.component';
+import { TaskComponent } from './components/task/task.component';
+import { CompleteComponent } from './components/complete/complete.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateComponent,
-    ListComponent
+    TodoComponent,
+    TaskComponent,
+    CompleteComponent
   ],
   imports: [
     BrowserModule,

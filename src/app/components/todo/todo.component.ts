@@ -5,11 +5,11 @@ import { DateValidator } from 'src/app/DateValidator';
 import { Todo } from '../../Todo';
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  selector: 'app-todo',
+  templateUrl: './todo.component.html',
+  styleUrls: ['./todo.component.css']
 })
-export class CreateComponent {
+export class TodoComponent {
 
   toDoForm: FormGroup
   @Output() newTask = new Subject<Todo>()
@@ -22,19 +22,17 @@ export class CreateComponent {
     this.toDoForm = this.createToDo()
   }
 
-  addTodo() {
-    // emit todo as output
+  addTask() {
+    const task = new Todo
+    task.description = this.toDoForm.get('description').value.trim()
+    // todo.description = this.toDoForm.controls['description'].value.trim()
+    task.priority = this.toDoForm.get('priority').value
+    task.due = this.toDoForm.get('due').value
 
-    const todo = new Todo
     // const todo = this.toDoForm.value.trim() as Todo
 
-    todo.description = this.toDoForm.get('description').value.trim()
-    // todo.description = this.toDoForm.controls['description'].value.trim()
-
-    todo.priority = this.toDoForm.get('priority').value
-    todo.due = this.toDoForm.get('due').value
-
-    this.newTask.next(todo)
+    // emit todo as output
+    this.newTask.next(task)
 
     // refresh form
     this.toDoForm = this.createToDo()

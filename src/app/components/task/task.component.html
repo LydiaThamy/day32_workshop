@@ -1,0 +1,27 @@
+<span *ngIf="updatedTasks.length != 0">
+
+  <h1 style="text-align: center;">Outstanding Tasks</h1>
+
+  <div *ngFor="let task of updatedTasks">
+  <table border="1" style="width: 100%;">
+    <thead>
+      <tr>
+        <td>
+          <h3>{{ task.description | titlecase }}</h3>
+        </td>
+        <td style="text-align: end;">
+          <form (ngSubmit)="completeTask(task)">
+            <button type="submit">Complete</button>
+          </form>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <td>{{ task.priority | titlecase }}</td>
+      <td style="text-align: end;">{{ task.due | date: 'MMM d' }}</td>
+    </tbody>
+  </table>
+  <br>
+</div>
+
+</span>
