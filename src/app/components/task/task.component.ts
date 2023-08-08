@@ -10,15 +10,23 @@ import { Todo } from 'src/app/Todo';
 export class TaskComponent {
 
     @Input() updatedTasks: Todo[]
+    @Input() changedTask: Todo[]
     @Output() completedTask = new Subject<Todo>()
+    @Output() editedTask = new Subject<Todo>()
 
   completeTask(task: Todo) {
-    this.deleteTask(task)
+    let index: number = this.updatedTasks.indexOf(task)
+    this.updatedTasks.splice(index, 1)
     this.completedTask.next(task)
+  }
+
+  editTask(task: Todo) {
+    this.editedTask.next(task)
   }
 
   deleteTask(task: Todo) {
     let index: number = this.updatedTasks.indexOf(task)
     this.updatedTasks.splice(index, 1)
   }
+
 }

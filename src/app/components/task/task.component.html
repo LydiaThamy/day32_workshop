@@ -10,9 +10,9 @@
           <h3>{{ task.description | titlecase }}</h3>
         </td>
         <td style="text-align: end;">
-          <form (ngSubmit)="completeTask(task)">
-            <button type="submit">Complete</button>
-          </form>
+            <button class="btn btn-success" (click)="completeTask(task)">Complete</button>&nbsp;
+            <button class="btn btn-outline-dark" (click)="editTask(task)">Edit</button>&nbsp;
+            <button class="btn btn-danger" (click)="deleteTask(task)">Delete</button>&nbsp;
         </td>
       </tr>
     </thead>

@@ -1,6 +1,6 @@
 <span *ngIf="completedTasks.length != 0">
 
-  <h1 style="text-align: center;"><button (click)="hideTasks()"  class="btn btn-light">Completed Tasks</button></h1>
+  <h1 style="text-align: center;"><button (click)="hideTasks()">Completed Tasks</button></h1>
 
   <span *ngIf="tasksShown" class="container">
   <div *ngFor="let task of completedTasks">
@@ -11,9 +11,7 @@
           <h3>{{ task.description | titlecase }}</h3>
         </td>
         <td style="text-align: end;">
-          <form (ngSubmit)="restoreTask(task)">
-            <button type="submit">Restore</button>
-          </form>
+            <button class="btn btn-outline-dark" (click)="restoreTask(task)">Restore</button>&nbsp;
         </td>
       </tr>
     </thead>
