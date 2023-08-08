@@ -1,4 +1,4 @@
-import { Component, Input, Output, DoCheck, OnInit } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Todo } from 'src/app/Todo';
 
@@ -14,7 +14,7 @@ export class TaskComponent{
   @Output() editedTask = new Subject<Todo>()
 
   ngDoCheck(): void {
-    
+
     if (this.updatedTasks == null)
       this.updatedTasks = []
 

@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Todo } from './Todo';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DateValidator } from './DateValidator';
