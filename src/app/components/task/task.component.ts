@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, Output, DoCheck, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Todo } from 'src/app/Todo';
 
@@ -7,12 +7,19 @@ import { Todo } from 'src/app/Todo';
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
-export class TaskComponent {
+export class TaskComponent{
 
-    @Input() updatedTasks: Todo[]
-    @Input() changedTask: Todo[]
-    @Output() completedTask = new Subject<Todo>()
-    @Output() editedTask = new Subject<Todo>()
+  @Input() updatedTasks: Todo[]
+  @Output() completedTask = new Subject<Todo>()
+  @Output() editedTask = new Subject<Todo>()
+
+  ngDoCheck(): void {
+    
+    if (this.updatedTasks == null)
+      this.updatedTasks = []
+
+    localStorage.setItem('outstanding tasks', JSON.stringify(this.updatedTasks))
+  }
 
   completeTask(task: Todo) {
     let index: number = this.updatedTasks.indexOf(task)

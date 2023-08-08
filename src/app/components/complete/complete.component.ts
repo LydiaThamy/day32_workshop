@@ -12,6 +12,10 @@ export class CompleteComponent {
   @Input() completedTasks: Todo[]
   @Output() restoredTask = new Subject<Todo>
 
+  ngDoCheck(): void {
+    localStorage.setItem('completed tasks', JSON.stringify(this.completedTasks))
+  }
+
   tasksShown: boolean = true
 
   hideTasks() {

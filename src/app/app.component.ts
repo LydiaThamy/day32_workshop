@@ -1,5 +1,4 @@
-import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { Todo } from './Todo';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DateValidator } from './DateValidator';
@@ -10,14 +9,15 @@ import { DateValidator } from './DateValidator';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
   title = 'todo_list';
 
   toDoForm: FormGroup
 
   editedTask: Todo
-  changedTask: Todo
-  taskList: Todo[] = []
-  completedList: Todo[] = []
+
+  taskList: Todo[]
+  completedList: Todo[]
 
   addNotEdit: boolean = true
 
@@ -25,7 +25,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.toDoForm = this.createToDo()
-    this.fillList()
+    // this.fillList()
+
+    console.log(localStorage.getItem('outstanding tasks'))
+    this.taskList = JSON.parse(localStorage.getItem('outstanding tasks'))
+
+    console.log(localStorage.getItem('completed tasks'))
+    this.completedList = JSON.parse(localStorage.getItem('completed tasks'))
   }
 
   fillList() {
@@ -36,7 +42,6 @@ export class AppComponent implements OnInit {
     ]
   }
 
-  // todo component
   createToDo(): FormGroup {
     return this.fb.group({
       description: this.fb.control<string>('', [Validators.required, Validators.minLength(5)]),
@@ -45,9 +50,12 @@ export class AppComponent implements OnInit {
     })
   }
 
+  // add or edit
   editTodo(task: Todo) {
 
     this.addNotEdit = false
+
+    task.index = this.taskList.findIndex(x => x.description === task.description)
     this.editedTask = task
 
     this.toDoForm = this.fb.group({
@@ -58,7 +66,6 @@ export class AppComponent implements OnInit {
 
   }
 
-  // task component
   submitTask() {
 
     let task = new Todo
@@ -79,22 +86,23 @@ export class AppComponent implements OnInit {
       // edit task
     } else {
       index = this.editedTask.index
-      console.log(index)
 
       this.taskList.splice(index, 1, task)
 
       this.addNotEdit = true
+
     }
 
     // refresh form
     this.toDoForm = this.createToDo()
   }
 
-  // complete component
+  // complete
   completeTask(task: Todo) {
     this.completedList = [...this.completedList, task]
   }
 
+  // restore
   restoreTask(task: Todo) {
     this.taskList = [...this.taskList, task]
   }
