@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 // import { TodoComponent } from './components/todo/todo.component';
 import { TaskComponent } from './components/task/task.component';
 import { CompleteComponent } from './components/complete/complete.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgMaterialModule } from './ng-material/ng-material.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { CompleteComponent } from './components/complete/complete.component';
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    NgMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
