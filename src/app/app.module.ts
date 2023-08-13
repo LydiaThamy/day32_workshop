@@ -12,16 +12,15 @@ import { NgMaterialModule } from './ng-material/ng-material.module';
 @NgModule({
   declarations: [
     AppComponent,
-    // TodoComponent,
     TaskComponent,
     CompleteComponent
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    NgMaterialModule
+      BrowserModule,
+      FormsModule,
+      ReactiveFormsModule,
+      BrowserAnimationsModule,
+      NgMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

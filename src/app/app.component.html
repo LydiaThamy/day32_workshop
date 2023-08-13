@@ -1,6 +1,64 @@
+<h1 style="text-align: center;">To-Do List</h1><br>
 <div class="container">
 
-  <span class="todo">
+  <form [formGroup]="toDoForm" (ngSubmit)="submitTask()">
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Add a task</mat-card-title>
+      </mat-card-header><br>
+
+      <mat-card-content>
+        <mat-form-field appearance="outline">
+          <mat-label for="description">Description</mat-label>
+          <input matInput formControlName="description" style="width: 100%;">
+          <mat-hint>Enter the task description</mat-hint>
+          <mat-error
+            *ngIf="toDoForm.get('description').touched && toDoForm.get('description').hasError('required')">
+            Task description required
+          </mat-error>
+          <mat-error
+            *ngIf="!toDoForm.get('description').hasError('required') && toDoForm.get('description').hasError('minlength')">
+            Must have at least 5 characters
+          </mat-error>
+        </mat-form-field>
+
+        <br><br>
+
+        <mat-radio-group formControlName="priority">
+          <mat-label>Priority</mat-label><br>
+          <mat-radio-button value="low">Low</mat-radio-button>
+          <mat-radio-button value="medium">Medium</mat-radio-button>
+          <mat-radio-button value="high">High</mat-radio-button>
+        </mat-radio-group>
+
+        <br><br>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Due</mat-label>
+          <input matInput [matDatepicker]='picker' formControlName="due">
+          <mat-hint>DD/MM/YYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]='picker'></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="toDoForm.get('due').touched && toDoForm.get('due').hasError('required')">
+            Enter the date which the task is due
+          </mat-error>
+          <mat-error
+            *ngIf="!toDoForm.get('due').hasError('required') && toDoForm.get('due').hasError('presentOrFuture')">
+            Date must be in the present or future</mat-error>
+        </mat-form-field>
+
+        <br><br>
+
+      </mat-card-content>
+      <mat-card-actions align="start">
+
+        <button mat-raised-button type="submit" [disabled]="toDoForm.invalid">Submit</button>
+      </mat-card-actions>
+    </mat-card>
+  </form><br><br>
+
+  <!-- <span class="todo">
     <h1 style="text-align: center;">To-Do List</h1>
 
     <form [formGroup]="toDoForm" (ngSubmit)="submitTask()">
@@ -85,7 +143,7 @@
       </table>
 
     </form>
-  </span>
+  </span> -->
 
   <app-task [updatedTasks]="taskList" (completedTask)="completeTask($event)" (editedTask)="editTodo($event)"></app-task>
 

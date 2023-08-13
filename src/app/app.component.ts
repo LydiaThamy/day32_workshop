@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Todo } from './Todo';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DateValidator } from './DateValidator';
+import { DateValidator } from './services/DateValidator';
 
 @Component({
   selector: 'app-root',
