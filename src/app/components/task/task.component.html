@@ -1,4 +1,32 @@
-<span *ngIf="updatedTasks.length != 0">
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Outstanding Tasks
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <table *ngFor="let task of updatedTasks" style="width: 100%;">
+
+    <tr>
+      <td>
+        <h3>{{ task.description | titlecase }}</h3>
+      </td>
+      <td style="text-align: end;">
+        <button class="btn btn-success" (click)="completeTask(task)">Complete</button>&nbsp;
+        <button class="btn btn-outline-dark" (click)="editTask(task)">Edit</button>&nbsp;
+        <button class="btn btn-danger" (click)="deleteTask(task)">Delete</button>&nbsp;
+      </td>
+    </tr>
+
+    <tr>
+      <td>{{ task.priority | titlecase }}</td>
+      <td style="text-align: end;">{{ task.due | date: 'MMM d, yyyy' }}</td>
+    </tr>
+
+    <br><mat-divider></mat-divider><br>
+  </table>
+
+  <!-- <span *ngIf="updatedTasks.length != 0">
 
   <h1 style="text-align: center;">Outstanding Tasks</h1>
 
@@ -24,4 +52,4 @@
   <br>
 </div>
 
-</span>
+</span> -->
