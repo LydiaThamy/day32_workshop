@@ -24,14 +24,10 @@ export class AppComponent implements OnInit {
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.toDoForm = this.createToDo()
-    // this.fillList()
+    this.createToDo()
 
-    console.log(localStorage.getItem('outstanding tasks'))
-    this.taskList = JSON.parse(localStorage.getItem('outstanding tasks'))
-
-    console.log(localStorage.getItem('completed tasks'))
-    this.completedList = JSON.parse(localStorage.getItem('completed tasks'))
+    // configure local storage
+    this.setupLocalStorage()
   }
 
   fillList() {
@@ -42,8 +38,29 @@ export class AppComponent implements OnInit {
     ]
   }
 
-  createToDo(): FormGroup {
-    return this.fb.group({
+  setupLocalStorage() {
+
+    const outstandingTask = localStorage.getItem('outstanding tasks')
+    if (outstandingTask != null && outstandingTask != "undefined" && JSON.parse(outstandingTask).length > 0) {
+      this.taskList = JSON.parse(outstandingTask)
+    } else {
+      this.taskList = []
+      this.fillList()
+      localStorage.setItem('outstanding tasks', JSON.stringify(this.taskList))
+    }
+
+    const completedTask = localStorage.getItem('completed tasks')
+    if (completedTask != null && completedTask !== "undefined" && JSON.parse(completedTask).length > 0) {
+      this.completedList = JSON.parse(completedTask)
+      console.log("1")
+    } else {
+      this.completedList = []
+      // localStorage.setItem('completed tasks', JSON.stringify(this.completedList))
+    }
+  }
+
+  createToDo() {
+    this.toDoForm = this.fb.group({
       description: this.fb.control<string>('', [Validators.required, Validators.minLength(5)]),
       priority: this.fb.control<string>('low'),
       due: this.fb.control<string>('', [Validators.required, DateValidator()])
@@ -52,6 +69,9 @@ export class AppComponent implements OnInit {
 
   // add or edit
   editTodo(task: Todo) {
+
+    if (typeof task.due == "string")
+      task.due = new Date(task.due)
 
     this.addNotEdit = false
 
@@ -78,32 +98,43 @@ export class AppComponent implements OnInit {
 
     // add task
     if (this.addNotEdit) {
-      index = this.taskList.length
 
       // emit todo as output
       this.taskList = [...this.taskList, task]
+
+      localStorage.setItem('outstanding tasks', JSON.stringify(this.taskList))
 
       // edit task
     } else {
       index = this.editedTask.index
 
       this.taskList.splice(index, 1, task)
+      localStorage.setItem('outstanding tasks', JSON.stringify(this.taskList))
 
       this.addNotEdit = true
-
     }
 
     // refresh form
-    this.toDoForm = this.createToDo()
+    this.createToDo()
   }
 
   // complete
   completeTask(task: Todo) {
+    // if (this.completedList === undefined) {
+    //   this.completedList = []
+    // }
     this.completedList = [...this.completedList, task]
+    localStorage.setItem('completed tasks', JSON.stringify(this.completedList))
+    localStorage.setItem('outstanding tasks', JSON.stringify(this.taskList))
   }
 
   // restore
   restoreTask(task: Todo) {
     this.taskList = [...this.taskList, task]
+    localStorage.setItem('outstanding tasks', JSON.stringify(this.taskList))
+  }
+
+  deleteTask(task: Todo) {
+    localStorage.setItem('outstanding tasks', JSON.stringify(this.taskList))
   }
 }

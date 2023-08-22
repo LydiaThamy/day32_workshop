@@ -145,7 +145,7 @@
     </form>
   </span> -->
 
-  <app-task [updatedTasks]="taskList" (completedTask)="completeTask($event)" (editedTask)="editTodo($event)"></app-task>
+  <app-task [updatedTasks]="taskList" (completedTask)="completeTask($event)" (editedTask)="editTodo($event)" (deletedTask)="deleteTask($event)"></app-task>
 
   <app-complete [completedTasks]="completedList" (restoredTask)="restoreTask($event)"></app-complete>
 
